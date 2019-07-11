@@ -11,9 +11,17 @@ use Validator;
 class AuthController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Register a user.
      *
-     * @return \Illuminate\Http\Response
+     * @param  string  email
+     * @param  string  password
+     * @param  string  confirm_password
+     * @param  string  name
+     *
+     * @method POST
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
      */
     public function register(Request $request){
 
@@ -43,6 +51,18 @@ class AuthController extends Controller
         return response()->json(['status' => true, 'message' =>'You have successfully registered', 'data' => $token], 200);
     }
 
+
+    /**
+     * Login's a user.
+     *
+     * @param  string  email
+     * @param  string  password
+     *
+     * @method POST
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function login(Request $request){
         $rules = [
             'email' => 'required',

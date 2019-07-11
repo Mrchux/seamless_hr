@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 */
 
 //Authentication & Register
-Route::post('/register', 'API\AuthController@register'); //{"name", "email", "password", "confirm_password"}
-Route::post('/login', 'API\AuthController@login'); //{"email", "password"}
+Route::post('/register', 'API\AuthController@register');
+Route::post('/login', 'API\AuthController@login');
 
 Route::get('/courses/create', 'API\CoursesController@createCourses');
 
@@ -23,5 +23,6 @@ Route::get('/courses/create', 'API\CoursesController@createCourses');
 
 Route::group(['middleware' =>  'auth:api'], function(){
     Route::get('/courses/list', 'API\CoursesController@listCourses');
+    Route::get('/courses/export', 'API\CoursesController@exportCourses');
     Route::post('/courses/register', 'API\CoursesController@registerCourse');
 });

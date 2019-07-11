@@ -15,11 +15,30 @@ use Validator;
 class CoursesController extends Controller
 {
 
+
+    /**
+     * Create's fake courses, dispatched to a queue
+     *
+     * @method GET
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function createCourses(){
         $this->dispatch(new ProcessCoursesCreation());
         return response()->json(['status' => true, 'message' =>'Courses creation in process...', 'data' => []], 200);
     }
 
+    /**
+     * Register the authenticated user to a course or courses
+     *
+     * @param  array  course_ids
+     *
+     * @method POST
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function registerCourse(Request $request){
         $rules = [
             'course_ids' => 'required',
@@ -50,16 +69,31 @@ class CoursesController extends Controller
             return response()->json(['status' => true, 'message' =>'You have successfully registered for a course', 'data' => []], 200);
 
         }
-
-
     }
 
+    /**
+     * List Courses
+     *
+     *
+     * @method GET
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function listCourses(){
         $courses = Course::all();
 
         return response()->json(['status' => true, 'message' =>'List of courses returned', 'data' => $courses], 200);
     }
 
+    /**
+     * Export courses to excel
+     *
+     * @method GET
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function exportCourses(){
         return Excel::download(new Course, 'courses.xlsx');
     }
